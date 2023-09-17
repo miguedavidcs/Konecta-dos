@@ -34,8 +34,8 @@
         </div>
 
         <div class="form-group">
-            <label for="cantidad_en_stock">Cantidad en Stock:</label>
-            <input type="text" name="cantidad_en_stock" value="{{ $producto->cantidad_en_stock }}" class="form-control">
+            <label for="stock">Cantidad en Stock:</label>
+            <input type="text" name="stock" value="{{ $producto->stock }}" class="form-control">
         </div>
 
         <div class="form-group">
@@ -43,10 +43,7 @@
             <input type="date" name="fecha_de_creacion" value="{{ $producto->fecha_de_creacion }}" class="form-control">
         </div>
 
-        <div class="form-group">
-            <label for="proveedor">Proveedor:</label>
-            <input type="text" name="proveedor" value="{{ $producto->proveedor }}" class="form-control">
-        </div>
+
 
         <button type="submit" class="btn btn-primary" onclick="return confirm('¿Estás seguro de que deseas modificar este producto?')">Editar</button>
     </form>

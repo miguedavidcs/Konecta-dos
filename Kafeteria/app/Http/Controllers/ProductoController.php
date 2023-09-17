@@ -31,9 +31,10 @@ class ProductoController extends Controller
             'peso' => 'required|numeric',
             'categoria' => 'required|string|max:255',
             'stock' => 'required|integer',
-            'fecha_de_creacion' => 'required|date',
+
             'proveedor' => 'nullable|string|max:255',
         ]);
+
 
         $producto = new Producto([
             'nombre_producto' => $request->input('nombre_producto'),
@@ -42,9 +43,10 @@ class ProductoController extends Controller
             'peso' => $request->input('peso'),
             'categoria' => $request->input('categoria'),
             'stock' => $request->input('stock'),
-            'fecha_de_creacion' => $request->input('fecha_de_creacion'),
+
             'proveedor' => $request->input('proveedor'),
         ]);
+        $producto->fecha_de_creacion = now();
 
         $producto->save();
 
@@ -64,23 +66,36 @@ class ProductoController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nombre_producto' => 'required|string|max:255',
-            'referencia' => 'required|string|max:255',
-            'precio' => 'required|numeric',
-            'peso' => 'required|numeric',
-            'categoria' => 'required|string|max:255',
-            'stock' => 'required|integer',
-            'fecha_de_creacion' => 'required|date',
-            'proveedor' => 'nullable|string|max:255',
-        ]);
+{
+    $request->validate([
+        'nombre_producto' => 'required|string|max:255',
+        'referencia' => 'required|string|max:255',
+        'precio' => 'required|numeric',
+        'peso' => 'required|numeric',
+        'categoria' => 'required|string|max:255',
+        'stock' => 'required|integer',
+        'fecha_de_creacion' => 'required|date',
+    ]);
 
-        $producto = Producto::findOrFail($id);
-        $producto->update($request->all());
 
-        return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente');
-    }
+    $producto = Producto::findOrFail($id);
+
+
+    $producto->nombre_producto = $request->input('nombre_producto');
+    $producto->referencia = $request->input('referencia');
+    $producto->precio = $request->input('precio');
+    $producto->peso = $request->input('peso');
+    $producto->categoria = $request->input('categoria');
+    $producto->stock = $request->input('stock');
+
+    $producto->fecha_de_creacion = $request->input('fecha_de_creacion');
+
+
+    $producto->save();
+
+    return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente');
+}
+
 
     public function destroy($id)
     {
