@@ -11,7 +11,7 @@ CREATE DATABASE kafeteria
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
-    -- Table: public.productos
+ -- Table: public.productos
 
 -- DROP TABLE IF EXISTS public.productos;
 
@@ -19,10 +19,12 @@ CREATE TABLE IF NOT EXISTS public.productos
 (
     id bigint NOT NULL DEFAULT nextval('productos_id_seq'::regclass),
     nombre_producto character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    referencia character varying(255) COLLATE pg_catalog."default" NOT NULL,
     precio numeric(10,2) NOT NULL,
-    cantidad_en_stock integer NOT NULL,
-    proveedor character varying(255) COLLATE pg_catalog."default",
-    fecha_de_creacion date,
+    peso integer NOT NULL,
+    categoria character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    stock integer NOT NULL,
+    fecha_de_creacion date NOT NULL,
     created_at timestamp(0) without time zone,
     updated_at timestamp(0) without time zone,
     CONSTRAINT productos_pkey PRIMARY KEY (id)
