@@ -44,6 +44,45 @@
                     </td>
                 </tr>
             @endforeach
+            @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
+            @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
+
         </tbody>
     </table>
+
+    <!-- Botón para mostrar el Producto con Mayor Stock -->
+    <button class="btn btn-primary" data-toggle="modal" data-target="#miModalProducto">Mostrar Producto con Mayor Stock</button>
+
+    <!-- Modal de Producto con Mayor Stock -->
+    <div class="modal" tabindex="-1" role="dialog" id="miModalProducto">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Producto de Mayor Stock</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>El producto con mayor stock es:</p>
+                    <div class="alert alert-success">
+                        <p><strong>Nombre:</strong> {{ $productoMayorStock->nombre_producto }}</p>
+                        <p><strong>Stock:</strong> {{ $productoMayorStock->cantidad_en_stock }}</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection

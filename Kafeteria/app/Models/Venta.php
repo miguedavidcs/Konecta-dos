@@ -11,6 +11,7 @@ class Venta extends Model
     protected $table = 'ventas';
 
     protected $fillable = [
+        'id',
         'id_producto',
         'fecha_venta',
         'cantidad_vendida',

@@ -9,8 +9,13 @@ class VentaController extends Controller
 {
     public function index()
     {
-        $ventas = Venta::all();
-        return view('ventas.index', compact('ventas'));
+    $ventas = Venta::all();
+    $productoMasVendido = Venta::groupBy('id_producto')
+        ->selectRaw('id_producto, SUM(cantidad_vendida) as total_ventas')
+        ->orderBy('total_ventas', 'desc')
+        ->first();
+
+    return view('ventas.index', compact('ventas', 'productoMasVendido'));
     }
 
     public function create()
@@ -66,4 +71,5 @@ class VentaController extends Controller
 
         return redirect()->route('ventas.index')->with('success', 'Venta eliminada exitosamente');
     }
+
 }
