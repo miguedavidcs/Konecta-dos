@@ -1,10 +1,10 @@
 @extends('home')
 
 @section('contenido')
-    <h1>Lista de Ventas</h1>
+    <h1 class="text-3xl text-center mb-6">Lista de Ventas</h1>
 
-    <table>
-        <thead>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th>ID de Venta</th>
                 <th>ID de Producto</th>
