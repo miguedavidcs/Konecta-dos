@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_producto');
-            $table->decimal('precio', 10, 2);
-            $table->integer('cantidad_en_stock');
-            $table->string('proveedor')->nullable();
-            $table->date('fecha_de_creacion')->nullable();
-            $table->timestamps();
+            $table->string('referencia');
+            $table->decimal('precio', 10, 2); // Precio como decimal con 2 decimales
+            $table->integer('peso');
+            $table->string('categoria');
+            $table->integer('stock');
+            $table->date('fecha_de_creacion');
+
+
+        $table->timestamps();
         });
     }
 

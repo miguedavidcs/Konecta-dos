@@ -7,13 +7,12 @@ use App\Models\Producto;
 use App\Models\Venta;
 use Carbon\Carbon;
 
-
 class ProductoController extends Controller
 {
     public function index()
     {
         $productos = Producto::all();
-        $productoMayorStock = Producto::orderBy('cantidad_en_stock', 'desc')->first();
+        $productoMayorStock = Producto::orderBy('stock', 'desc')->first();
 
         return view('productos.index', compact('productos', 'productoMayorStock'));
     }
@@ -27,17 +26,24 @@ class ProductoController extends Controller
     {
         $request->validate([
             'nombre_producto' => 'required|string|max:255',
+            'referencia' => 'required|string|max:255',
             'precio' => 'required|numeric',
-            'cantidad_en_stock' => 'required|integer',
+            'peso' => 'required|numeric',
+            'categoria' => 'required|string|max:255',
+            'stock' => 'required|integer',
+            'fecha_de_creacion' => 'required|date',
             'proveedor' => 'nullable|string|max:255',
         ]);
 
         $producto = new Producto([
             'nombre_producto' => $request->input('nombre_producto'),
+            'referencia' => $request->input('referencia'),
             'precio' => $request->input('precio'),
-            'cantidad_en_stock' => $request->input('cantidad_en_stock'),
+            'peso' => $request->input('peso'),
+            'categoria' => $request->input('categoria'),
+            'stock' => $request->input('stock'),
+            'fecha_de_creacion' => $request->input('fecha_de_creacion'),
             'proveedor' => $request->input('proveedor'),
-            'fecha_de_creacion' => Carbon::now(), // Establecer la fecha actual automáticamente
         ]);
 
         $producto->save();
@@ -61,13 +67,16 @@ class ProductoController extends Controller
     {
         $request->validate([
             'nombre_producto' => 'required|string|max:255',
+            'referencia' => 'required|string|max:255',
             'precio' => 'required|numeric',
-            'cantidad_en_stock' => 'required|integer',
+            'peso' => 'required|numeric',
+            'categoria' => 'required|string|max:255',
+            'stock' => 'required|integer',
+            'fecha_de_creacion' => 'required|date',
             'proveedor' => 'nullable|string|max:255',
         ]);
 
         $producto = Producto::findOrFail($id);
-
         $producto->update($request->all());
 
         return redirect()->route('productos.index')->with('success', 'Producto actualizado exitosamente');
@@ -75,9 +84,7 @@ class ProductoController extends Controller
 
     public function destroy($id)
     {
-
         $producto = Producto::findOrFail($id);
-
         $producto->delete();
 
         return redirect()->route('productos.index')->with('success', 'Producto eliminado exitosamente');
@@ -85,7 +92,6 @@ class ProductoController extends Controller
 
     public function comprar(Request $request, $id)
     {
-
         $producto = Producto::find($id);
 
         if (!$producto) {
@@ -94,7 +100,7 @@ class ProductoController extends Controller
 
         $cantidadComprar = $request->input('cantidad_comprar');
 
-        if ($cantidadComprar > $producto->cantidad_en_stock) {
+        if ($cantidadComprar > $producto->stock) {
             return redirect()->route('productos.index')->with('error', 'La cantidad supera el stock disponible.');
         }
 
@@ -108,11 +114,9 @@ class ProductoController extends Controller
         $venta->monto_total = $totalCompra;
         $venta->save();
 
-        $producto->cantidad_en_stock -= $cantidadComprar;
+        $producto->stock -= $cantidadComprar;
         $producto->save();
 
-        return redirect()->route('productos.index')->with('success', 'Compra realizada con éxito.'.$producto->nombre_producto);
+        return redirect()->route('productos.index')->with('success', 'Compra realizada con éxito: ' . $producto->nombre_producto);
     }
-
-
 }

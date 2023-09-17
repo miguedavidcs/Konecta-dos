@@ -8,7 +8,10 @@
         <thead class="thead-dark">
             <tr>
                 <th>Nombre del Producto</th>
+                <th>Referencia</th>
                 <th>Precio</th>
+                <th>Peso</th>
+                <th>Categoría</th>
                 <th>Stock</th>
                 <th>Fecha de Creación</th>
                 <th>Acciones CRUD</th>
@@ -19,8 +22,11 @@
             @foreach($productos as $producto)
                 <tr>
                     <td>{{ $producto->nombre_producto }}</td>
+                    <td>{{ $producto->referencia }}</td>
                     <td>{{ $producto->precio }}</td>
-                    <td>{{ $producto->cantidad_en_stock }}</td>
+                    <td>{{ $producto->peso }}</td>
+                    <td>{{ $producto->categoria }}</td>
+                    <td>{{ $producto->stock }}</td>
                     <td>{{ $producto->fecha_de_creacion }}</td>
                     <td>
                         <!-- editar y eliminar -->
