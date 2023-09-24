@@ -41,12 +41,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>El producto más vendido es:</p>
-                        <div class="alert alert-success">
-                            <p><strong>Nombre:</strong> {{ $productoMasVendido->producto->nombre_producto }}</p>
-                            <p><strong>Cantidad Vendida:</strong> {{ $productoMasVendido->total_ventas }}</p>
-                        </div>
+                        @if ($productoMasVendido)
+                            <p>El producto más vendido es:</p>
+                            <div class="alert alert-success">
+                                <p><strong>Nombre:</strong> {{ $productoMasVendido->producto ? $productoMasVendido->producto->nombre_producto : 'No disponible' }}</p>
+                                <p><strong>Cantidad Vendida:</strong> {{ $productoMasVendido->total_ventas }}</p>
+                            </div>
+                        @else
+                            <p>No hay datos disponibles sobre el producto más vendido.</p>
+                        @endif
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>

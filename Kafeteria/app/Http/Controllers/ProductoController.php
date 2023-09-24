@@ -61,12 +61,12 @@ class ProductoController extends Controller
 
     public function edit($id)
     {
-        $producto = Producto::findOrFail($id);
+        $producto = Producto::find($id);
         return view('productos.edit', compact('producto'));
     }
 
     public function update(Request $request, $id)
-{
+    {
     $request->validate([
         'nombre_producto' => 'required|string|max:255',
         'referencia' => 'required|string|max:255',

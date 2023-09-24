@@ -3,7 +3,6 @@
 @section('contenido')
     <h1 class="text-3xl text-center mb-6">Lista de Productos</h1>
     <a href="{{ route('productos.create') }}" class="btn btn-primary mb-4">Crear Producto</a>
-
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
